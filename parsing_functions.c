@@ -45,6 +45,17 @@ static void free_element_contents(element elt) {
         free(elt.contents.link);
         elt.contents.link = NULL;
         break;
+      case MEDIA:
+      case AUDIO:
+      case VIDEO:
+        free(elt.contents.media->source1);
+        elt.contents.media->source1 = NULL;
+        free(elt.contents.media->source2);
+        elt.contents.media->source2 = NULL;
+        free_element_list(elt.contents.media->label);
+        free(elt.contents.media);
+        elt.contents.media = NULL;
+        break;
       default:
         ;
     }

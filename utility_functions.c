@@ -118,6 +118,17 @@ static element * mk_link(element *label, char *url, char *title) {
     return result;
 }
 
+/* mk_media - constructor for AUDIO and VIDEO element */
+static element * mk_media(element *label, char *source1, char *source2) {
+    element *result;
+    result = mk_element(MEDIA);
+    result->contents.media = malloc(sizeof(media));
+    result->contents.media->label = label;
+    result->contents.media->source1 = strdup(source1);
+    result->contents.media->source2 = strdup(source2);
+    return result;
+}
+
 /* extension = returns true if extension is selected */
 static bool extension(int ext) {
     return (syntax_extensions & ext);

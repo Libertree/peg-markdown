@@ -42,6 +42,8 @@ Block =     BlankLine*
             | BulletList
             | HtmlBlock
             | StyleBlock
+            | Audio
+            | Video
             | Para
             | Plain )
 
@@ -501,6 +503,30 @@ Image = '!' ( ExplicitLink | ReferenceLink )
               element *result;
               result = $$;
               $$->children = cons(mk_str("!"), result->children);
+          } }
+
+MediaLink =  l:Label '(' Sp s1:Source Spnl s2:Source Sp ')'
+             { $$ = mk_media(l->children, s1->contents.str, s2->contents.str);
+               free_element(s1);
+               free_element(s2);
+               free(l); }
+
+Audio = NonindentSpace '~' MediaLink
+          { if ($$->key == MEDIA) {
+              $$->key = AUDIO;
+          } else {
+              element *result;
+              result = $$;
+              $$->children = cons(mk_str("~"), result->children);
+          } }
+
+Video = NonindentSpace '%' MediaLink
+          { if ($$->key == MEDIA) {
+              $$->key = VIDEO;
+          } else {
+              element *result;
+              result = $$;
+              $$->children = cons(mk_str("~"), result->children);
           } }
 
 Link =  ExplicitLink | ReferenceLink | AutoLink

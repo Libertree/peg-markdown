@@ -73,6 +73,8 @@ static void print_tree(element * elt, int indent) {
             case STR:                key = "STR"; break;
             case LINK:               key = "LINK"; break;
             case IMAGE:              key = "IMAGE"; break;
+            case AUDIO:              key = "AUDIO"; break;
+            case VIDEO:              key = "VIDEO"; break;
             case CODE:               key = "CODE"; break;
             case HTML:               key = "HTML"; break;
             case EMPH:               key = "EMPH"; break;

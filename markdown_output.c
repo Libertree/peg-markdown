@@ -202,6 +202,36 @@ static void print_html_element(GString *out, element *elt, bool obfuscate) {
         }
         g_string_append_printf(out, " />");
         break;
+    case AUDIO:
+        pad(out, 2);
+        g_string_append_printf(out, "<audio controls=\"true\">\n");
+        g_string_append_printf(out, "  <source src=\"");
+        print_html_string(out, elt->contents.media->source1, obfuscate);
+        g_string_append_printf(out, "\" />\n");
+        g_string_append_printf(out, "  <source src=\"");
+        print_html_string(out, elt->contents.media->source2, obfuscate);
+        g_string_append_printf(out, "\" />\n");
+        g_string_append_printf(out, "</audio>\n");
+        g_string_append_printf(out, "<div class=\"audio-file-title\">");
+        print_html_element_list(out, elt->contents.link->label, obfuscate);
+        g_string_append_printf(out, "</div>");
+        padded = 0;
+        break;
+    case VIDEO:
+        pad(out, 2);
+        g_string_append_printf(out, "<video controls=\"true\">\n");
+        g_string_append_printf(out, "  <source src=\"");
+        print_html_string(out, elt->contents.media->source1, obfuscate);
+        g_string_append_printf(out, "\" />\n");
+        g_string_append_printf(out, "  <source src=\"");
+        print_html_string(out, elt->contents.media->source2, obfuscate);
+        g_string_append_printf(out, "\" />\n");
+        g_string_append_printf(out, "</video>\n");
+        g_string_append_printf(out, "<div class=\"video-file-title\">");
+        print_html_element_list(out, elt->contents.link->label, obfuscate);
+        g_string_append_printf(out, "</div>");
+        padded = 0;
+        break;
     case EMPH:
         g_string_append_printf(out, "<em>");
         print_html_element_list(out, elt->children, obfuscate);
@@ -439,6 +469,17 @@ static void print_latex_element(GString *out, element *elt) {
     case IMAGE:
         g_string_append_printf(out, "\\includegraphics{%s}", elt->contents.link->url);
         break;
+    case AUDIO:
+        g_string_append_printf(out, "\n\n[AUDIO: {%s}]", elt->contents.media->source1);
+        padded = 0;
+        /* not supported */
+        break;
+    case VIDEO:
+        pad(out, 2);
+        g_string_append_printf(out, "\n\n[VIDEO: {%s}]", elt->contents.media->source1);
+        padded = 0;
+        /* not supported */
+        break;
     case EMPH:
         g_string_append_printf(out, "\\emph{");
         print_latex_element_list(out, elt->children);
@@ -641,6 +682,22 @@ static void print_groff_mm_element(GString *out, element *elt, int count) {
     case IMAGE:
         g_string_append_printf(out, "[IMAGE: ");
         print_groff_mm_element_list(out, elt->contents.link->label);
+        g_string_append_printf(out, "]");
+        padded = 0;
+        /* not supported */
+        break;
+    case AUDIO:
+        pad(out, 2);
+        g_string_append_printf(out, "[AUDIO: ");
+        print_groff_string(out, elt->contents.media->source1);
+        g_string_append_printf(out, "]");
+        padded = 0;
+        /* not supported */
+        break;
+    case VIDEO:
+        pad(out, 2);
+        g_string_append_printf(out, "[VIDEO: ");
+        print_groff_string(out, elt->contents.media->source1);
         g_string_append_printf(out, "]");
         padded = 0;
         /* not supported */

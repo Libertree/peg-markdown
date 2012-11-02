@@ -13,10 +13,20 @@ struct Link {
 
 typedef struct Link link;
 
-/* Union for contents of an Element (string, list, or link). */
+/* Information (label and two sources) for a media link. */
+struct Media {
+    struct Element   *label;
+    char             *source1;
+    char             *source2;
+};
+
+typedef struct Media media;
+
+/* Union for contents of an Element (string, list, link, or media). */
 union Contents {
     char             *str;
     struct Link      *link;
+    struct Media     *media;
 };
 
 /* Types of semantic values returned by parsers. */ 
@@ -33,6 +43,9 @@ enum keys { LIST,   /* A generic list of values.  For ordered and bullet lists, 
             STR,
             LINK,
             IMAGE,
+            MEDIA,
+            AUDIO,
+            VIDEO,
             CODE,
             HTML,
             EMPH,
