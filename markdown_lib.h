@@ -9,7 +9,8 @@ enum markdown_extensions {
     EXT_FILTER_STYLES    = 0x08,
     EXT_STRIKE           = 0x10,
     EXT_AUTOLINK         = 0x20,
-    EXT_HARD_WRAP        = 0x40
+    EXT_HARD_WRAP        = 0x40,
+    EXT_NO_IMAGES        = 0x80
 };
 
 enum markdown_formats {

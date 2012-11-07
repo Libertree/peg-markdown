@@ -136,6 +136,8 @@ Pandoc or PHP Markdown Extra.
 
 The `--autolink` extension converts bare URLs into links.
 
+The `--no_images` extension treats image links as plain links.
+
 Using the library
 =================
 
