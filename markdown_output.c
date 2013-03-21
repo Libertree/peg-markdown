@@ -208,9 +208,11 @@ static void print_html_element(GString *out, element *elt, bool obfuscate) {
         g_string_append_printf(out, "  <source src=\"");
         print_html_string(out, elt->contents.media->source1, obfuscate);
         g_string_append_printf(out, "\" />\n");
-        g_string_append_printf(out, "  <source src=\"");
-        print_html_string(out, elt->contents.media->source2, obfuscate);
-        g_string_append_printf(out, "\" />\n");
+        if (strcmp(elt->contents.media->source2, "")) {
+            g_string_append_printf(out, "  <source src=\"");
+            print_html_string(out, elt->contents.media->source2, obfuscate);
+            g_string_append_printf(out, "\" />\n");
+        }
         g_string_append_printf(out, "</audio>\n");
         g_string_append_printf(out, "<div class=\"audio-file-title\">");
         print_html_element_list(out, elt->contents.link->label, obfuscate);
@@ -223,9 +225,11 @@ static void print_html_element(GString *out, element *elt, bool obfuscate) {
         g_string_append_printf(out, "  <source src=\"");
         print_html_string(out, elt->contents.media->source1, obfuscate);
         g_string_append_printf(out, "\" />\n");
-        g_string_append_printf(out, "  <source src=\"");
-        print_html_string(out, elt->contents.media->source2, obfuscate);
-        g_string_append_printf(out, "\" />\n");
+        if (strcmp(elt->contents.media->source2, "")) {
+            g_string_append_printf(out, "  <source src=\"");
+            print_html_string(out, elt->contents.media->source2, obfuscate);
+            g_string_append_printf(out, "\" />\n");
+        }
         g_string_append_printf(out, "</video>\n");
         g_string_append_printf(out, "<div class=\"video-file-title\">");
         print_html_element_list(out, elt->contents.link->label, obfuscate);
