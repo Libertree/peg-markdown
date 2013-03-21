@@ -33,7 +33,7 @@ static int extensions;
 
  ***********************************************************************/
 
-#define VERSION "0.4.12"
+#define VERSION "0.4.14"
 #define COPYRIGHT "Copyright (c) 2008-2009 John MacFarlane.  License GPLv2+ or MIT.\n" \
                   "This is free software: you are free to change and redistribute it.\n" \
                   "There is NO WARRANTY, to the extent permitted by law."
@@ -74,6 +74,7 @@ int main(int argc, char * argv[]) {
     static gboolean opt_strike = FALSE;
     static gboolean opt_autolink = FALSE;
     static gboolean opt_hardwrap = FALSE;
+    static gboolean opt_no_images = FALSE;
     static gboolean opt_allext = FALSE;
 
     static GOptionEntry entries[] =
@@ -90,11 +91,12 @@ int main(int argc, char * argv[]) {
     /* Options to active syntax extensions.  These appear separately in --help. */
     static GOptionEntry ext_entries[] =
     {
-      { "smart",    0, 0, G_OPTION_ARG_NONE, &opt_smart,    "use smart typography extension", NULL },
-      { "notes",    0, 0, G_OPTION_ARG_NONE, &opt_notes,    "use notes extension", NULL },
-      { "strike",   0, 0, G_OPTION_ARG_NONE, &opt_strike,   "use strike-through extension", NULL },
-      { "autolink", 0, 0, G_OPTION_ARG_NONE, &opt_autolink, "autolink bare URLs", NULL },
-      { "hardwrap", 0, 0, G_OPTION_ARG_NONE, &opt_hardwrap, "respect linebreaks in paragraphs", NULL },
+      { "smart",     0, 0, G_OPTION_ARG_NONE, &opt_smart,     "use smart typography extension", NULL },
+      { "notes",     0, 0, G_OPTION_ARG_NONE, &opt_notes,     "use notes extension", NULL },
+      { "strike",    0, 0, G_OPTION_ARG_NONE, &opt_strike,    "use strike-through extension", NULL },
+      { "autolink",  0, 0, G_OPTION_ARG_NONE, &opt_autolink,  "autolink bare URLs", NULL },
+      { "hardwrap",  0, 0, G_OPTION_ARG_NONE, &opt_hardwrap,  "respect linebreaks in paragraphs", NULL },
+      { "no_images", 0, 0, G_OPTION_ARG_NONE, &opt_no_images, "render images as plain links", NULL },
       { NULL }
     };
 
@@ -139,6 +141,8 @@ int main(int argc, char * argv[]) {
         extensions = extensions | EXT_AUTOLINK;
     if (opt_hardwrap)
         extensions = extensions | EXT_HARD_WRAP;
+    if (opt_no_images)
+        extensions = extensions | EXT_NO_IMAGES;
 
     if (opt_to == NULL)
         output_format = HTML_FORMAT;

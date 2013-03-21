@@ -1,3 +1,6 @@
+#ifndef MARKDOWN_LIB_H
+#define MARKDOWN_LIB_H
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <glib.h>
@@ -9,7 +12,8 @@ enum markdown_extensions {
     EXT_FILTER_STYLES    = 0x08,
     EXT_STRIKE           = 0x10,
     EXT_AUTOLINK         = 0x20,
-    EXT_HARD_WRAP        = 0x40
+    EXT_HARD_WRAP        = 0x40,
+    EXT_NO_IMAGES        = 0x80
 };
 
 enum markdown_formats {
@@ -23,3 +27,5 @@ GString * markdown_to_g_string(char *text, int extensions, int output_format);
 char * markdown_to_string(char *text, int extensions, int output_format);
 
 /* vim: set ts=4 sw=4 : */
+#endif
+
