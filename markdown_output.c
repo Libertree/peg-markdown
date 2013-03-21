@@ -494,6 +494,11 @@ static void print_latex_element(GString *out, element *elt) {
         print_latex_element_list(out, elt->children);
         g_string_append_printf(out, "}");
         break;
+    case STRIKE:
+        g_string_append_printf(out, "\\sout{");
+        print_latex_element_list(out, elt->children);
+        g_string_append_printf(out, "}");
+        break;
     case LIST:
         print_latex_element_list(out, elt->children);
         break;
@@ -608,6 +613,12 @@ static bool in_list_item = false; /* True if we're parsing contents of a list it
 
 /* print_groff_string - print string, escaping for groff */
 static void print_groff_string(GString *out, char *str) {
+    /* escape dots if it is the first character */
+    if (*str == '.') {
+        g_string_append_printf(out, "\\[char46]");
+        str++;
+    }
+
     while (*str != '\0') {
         switch (*str) {
         case '\\':
@@ -717,6 +728,12 @@ static void print_groff_mm_element(GString *out, element *elt, int count) {
         print_groff_mm_element_list(out, elt->children);
         g_string_append_printf(out, "\\fR");
         padded = 0;
+        break;
+    case STRIKE:
+        g_string_append_printf(out, "\\c\n.ST \"");
+        print_groff_mm_element_list(out, elt->children);
+        g_string_append_printf(out, "\"");
+        pad(out, 1);
         break;
     case LIST:
         print_groff_mm_element_list(out, elt->children);
@@ -1014,6 +1031,12 @@ static void print_odf_element(GString *out, element *elt) {
         print_odf_element_list(out, elt->children);
         g_string_append_printf(out, "</text:span>");
         break;
+    case STRIKE:
+        g_string_append_printf(out,
+            "<text:span text:style-name=\"StrikeThrough\">");
+        print_odf_element_list(out, elt->children);
+        g_string_append_printf(out, "</text:span>");
+        break;
     case LIST:
         print_odf_element_list(out, elt->children);
         break;
@@ -1169,9 +1192,16 @@ void print_element_list(GString *out, element *elt, int format, int exts) {
         }
         break;
     case LATEX_FORMAT:
+        if (extensions & EXT_STRIKE) {
+          g_string_append_printf(out, "\\usepackage{ulem}\n");
+        }
         print_latex_element_list(out, elt);
         break;
     case GROFF_MM_FORMAT:
+        if (extensions & EXT_STRIKE) {
+          g_string_append_printf(out,
+              ".de ST\n.nr width \\w'\\\\$1'\n\\Z@\\v'-.25m'\\l'\\\\n[width]u'@\\\\$1\\c\n..\n.\n");
+        }
         print_groff_mm_element_list(out, elt);
         break;
     case ODF_FORMAT:
