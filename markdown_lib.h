@@ -13,7 +13,8 @@ enum markdown_extensions {
     EXT_STRIKE           = 0x10,
     EXT_AUTOLINK         = 0x20,
     EXT_HARD_WRAP        = 0x40,
-    EXT_NO_IMAGES        = 0x80
+    EXT_NO_IMAGES        = 0x80,
+    EXT_MEDIA            = 0xA0
 };
 
 enum markdown_formats {

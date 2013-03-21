@@ -75,6 +75,7 @@ int main(int argc, char * argv[]) {
     static gboolean opt_autolink = FALSE;
     static gboolean opt_hardwrap = FALSE;
     static gboolean opt_no_images = FALSE;
+    static gboolean opt_media = FALSE;
     static gboolean opt_allext = FALSE;
 
     static GOptionEntry entries[] =
@@ -97,6 +98,7 @@ int main(int argc, char * argv[]) {
       { "autolink",  0, 0, G_OPTION_ARG_NONE, &opt_autolink,  "autolink bare URLs", NULL },
       { "hardwrap",  0, 0, G_OPTION_ARG_NONE, &opt_hardwrap,  "respect linebreaks in paragraphs", NULL },
       { "no_images", 0, 0, G_OPTION_ARG_NONE, &opt_no_images, "render images as plain links", NULL },
+      { "media",     0, 0, G_OPTION_ARG_NONE, &opt_media,     "use audio/video embed syntax", NULL },
       { NULL }
     };
 
@@ -143,6 +145,8 @@ int main(int argc, char * argv[]) {
         extensions = extensions | EXT_HARD_WRAP;
     if (opt_no_images)
         extensions = extensions | EXT_NO_IMAGES;
+    if (opt_media)
+        extensions = extensions | EXT_MEDIA;
 
     if (opt_to == NULL)
         output_format = HTML_FORMAT;
