@@ -143,6 +143,8 @@ Redcarpet.  For strike-through support in LaTeX documents the `sout`
 macro from the `ulem` package is used.  Add
 `\usepackage[normalem]{ulem}` to your document's preamble to load it.
 
+With the `--codeblock` extension, blocks delimited with `~~~` will be
+considered as code, without the need to be indented.
 
 Using the library
 =================

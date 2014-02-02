@@ -65,6 +65,7 @@ Doc =       BOM? a:StartList ( Block { a = cons($$, a); } )*
 Block =     BlankLine*
             ( BlockQuote
             | Verbatim
+            | CodeBlock
             | Note
             | Reference
             | HorizontalRule
@@ -415,6 +416,12 @@ StyleBlock =    < InStyleTags >
                         $$->key = HTMLBLOCK;
                     }
                 }
+
+CodeBlock = &{ extension(EXT_CODEBLOCK) }
+            "~~~" Newline < (!(Newline "~~~") .)* > Newline "~~~" BlankLine*
+            { $$ = mk_str(yytext);
+              $$->key = VERBATIM;
+            }
 
 Inlines  =  a:StartList ( !Endline Inline { a = cons($$, a); }
                         | c:Endline &Inline { a = cons(c, a); } )+ Endline?

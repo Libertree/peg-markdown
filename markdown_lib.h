@@ -10,15 +10,16 @@ extern "C" {
 #endif
 
 enum markdown_extensions {
-    EXT_SMART            = 0x01,
-    EXT_NOTES            = 0x02,
-    EXT_FILTER_HTML      = 0x04,
-    EXT_FILTER_STYLES    = 0x08,
-    EXT_STRIKE           = 0x10,
-    EXT_AUTOLINK         = 0x20,
-    EXT_HARD_WRAP        = 0x40,
-    EXT_NO_IMAGES        = 0x80,
-    EXT_MEDIA            = 0xA0
+    EXT_SMART            = 0x0001,
+    EXT_NOTES            = 0x0002,
+    EXT_FILTER_HTML      = 0x0004,
+    EXT_FILTER_STYLES    = 0x0008,
+    EXT_STRIKE           = 0x0010,
+    EXT_AUTOLINK         = 0x0020,
+    EXT_HARD_WRAP        = 0x0040,
+    EXT_NO_IMAGES        = 0x0080,
+    EXT_MEDIA            = 0x00A0,
+    EXT_CODEBLOCK        = 0x0100
 };
 
 enum markdown_formats {
