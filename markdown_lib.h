@@ -18,8 +18,8 @@ enum markdown_extensions {
     EXT_AUTOLINK         = 0x0020,
     EXT_HARD_WRAP        = 0x0040,
     EXT_NO_IMAGES        = 0x0080,
-    EXT_MEDIA            = 0x00A0,
-    EXT_CODEBLOCK        = 0x0100
+    EXT_MEDIA            = 0x0100,
+    EXT_CODEBLOCK        = 0x0200
 };
 
 enum markdown_formats {
