@@ -529,10 +529,10 @@ Strike = &{ extension(EXT_STRIKE) }
          { $$ = mk_list(STRIKE, a); }
 
 Image = '!' ( ExplicitLink | ReferenceLink )
-        { if (extension(EXT_NO_IMAGES)) {
-              $$->key = LINK;
-          } else if ($$->key == LINK) {
+        { if ($$->key == LINK) {
+            if (!extension(EXT_NO_IMAGES)) {
               $$->key = IMAGE;
+            }
           } else {
               element *result;
               result = $$;
