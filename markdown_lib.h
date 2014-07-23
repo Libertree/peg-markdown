@@ -19,7 +19,8 @@ enum markdown_extensions {
     EXT_HARD_WRAP        = 0x0040,
     EXT_NO_IMAGES        = 0x0080,
     EXT_MEDIA            = 0x0100,
-    EXT_CODEBLOCK        = 0x0200
+    EXT_CODEBLOCK        = 0x0200,
+    EXT_HASHTAGS         = 0x0400,
 };
 
 enum markdown_formats {

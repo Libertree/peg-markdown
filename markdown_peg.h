@@ -60,6 +60,7 @@ enum keys { LIST,   /* A generic list of values.  For ordered and bullet lists, 
             H1, H2, H3, H4, H5, H6,  /* Code assumes that these are in order. */
             BLOCKQUOTE,
             VERBATIM,
+            HASHTAG,
             HTMLBLOCK,
             HRULE,
             REFERENCE,

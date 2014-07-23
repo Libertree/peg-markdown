@@ -174,6 +174,9 @@ static void print_html_element(GString *out, element *elt, bool obfuscate) {
     case HTML:
         g_string_append_printf(out, "%s", elt->contents.str);
         break;
+    case HASHTAG:
+        g_string_append_printf(out, "<span rel='hashtag'>%s</span>", elt->contents.str);
+        break;
     case LINK:
         if (strstr(elt->contents.link->url, "mailto:") == elt->contents.link->url)
             obfuscate = true;  /* obfuscate mailto: links */
@@ -542,6 +545,9 @@ static void print_latex_element(GString *out, element *elt) {
     case HTMLBLOCK:
         /* don't print HTML block */
         break;
+    case HASHTAG:
+        print_latex_string(out, elt->contents.str);
+        break;
     case VERBATIM:
         pad(out, 1);
         g_string_append_printf(out, "\\begin{verbatim}\n");
@@ -688,6 +694,9 @@ static void print_groff_mm_element(GString *out, element *elt, int count) {
         break;
     case HTML:
         /* don't print HTML */
+        break;
+    case HASHTAG:
+        print_groff_string(out, elt->contents.str);
         break;
     case LINK:
         print_groff_mm_element_list(out, elt->contents.link->label);
@@ -997,6 +1006,9 @@ static void print_odf_element(GString *out, element *elt) {
         g_string_append_printf(out, "</text:span>");
         break;
     case HTML:
+        break;
+    case HASHTAG:
+        print_html_string(out, elt->contents.str, 0);
         break;
     case LINK:
         g_string_append_printf(out, "<text:a xlink:type=\"simple\" xlink:href=\"");

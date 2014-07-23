@@ -430,6 +430,7 @@ Inlines  =  a:StartList ( !Endline Inline { a = cons($$, a); }
 Inline  = Endline
         | UlOrStarLine
         | Space
+        | Hashtag
         | Strong
         | Emph
         | Strike
@@ -527,6 +528,10 @@ Strike = &{ extension(EXT_STRIKE) }
          ( !"~~" b:Inline { a = cons(b, a); })+
          "~~"
          { $$ = mk_list(STRIKE, a); }
+
+Hashtag = &{ extension(EXT_HASHTAGS) }
+          Spnl < '#' (!SpecialChar !',' !'.' !'$' !'@' Nonspacechar)+ >
+          { $$ = mk_str(yytext); $$->key = HASHTAG; }
 
 Image = '!' ( ExplicitLink | ReferenceLink )
         { if ($$->key == LINK) {

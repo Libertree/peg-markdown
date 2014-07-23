@@ -77,6 +77,7 @@ int main(int argc, char * argv[]) {
     static gboolean opt_no_images = FALSE;
     static gboolean opt_media = FALSE;
     static gboolean opt_codeblock = FALSE;
+    static gboolean opt_hashtags = FALSE;
     static gboolean opt_allext = FALSE;
 
     static GOptionEntry entries[] =
@@ -101,6 +102,7 @@ int main(int argc, char * argv[]) {
       { "no_images", 0, 0, G_OPTION_ARG_NONE, &opt_no_images, "render images as plain links", NULL },
       { "media",     0, 0, G_OPTION_ARG_NONE, &opt_media,     "use audio/video embed syntax", NULL },
       { "codeblock", 0, 0, G_OPTION_ARG_NONE, &opt_codeblock, "enable code block syntax", NULL },
+      { "hashtags",  0, 0, G_OPTION_ARG_NONE, &opt_hashtags,  "mark hashtags", NULL },
       { NULL }
     };
 
@@ -151,6 +153,8 @@ int main(int argc, char * argv[]) {
         extensions = extensions | EXT_MEDIA;
     if (opt_codeblock)
         extensions = extensions | EXT_CODEBLOCK;
+    if (opt_hashtags)
+        extensions = extensions | EXT_HASHTAGS;
 
     if (opt_to == NULL)
         output_format = HTML_FORMAT;
