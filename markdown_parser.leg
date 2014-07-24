@@ -454,7 +454,7 @@ Str = a:StartList < NormalChar+ > { a = cons(mk_str(yytext), a); }
       ( StrChunk { a = cons($$, a); } )*
       { if (a->next == NULL) { $$ = a; } else { $$ = mk_list(LIST, a); } }
 
-StrChunk = < (NormalChar | '_'+ &Alphanumeric)+ > { $$ = mk_str(yytext); } |
+StrChunk = < (NormalChar | '_'+ &Alphanumeric | '#'+ &Alphanumeric )+ > { $$ = mk_str(yytext); } |
            AposChunk
 
 AposChunk = &{ extension(EXT_SMART) } '\'' &Alphanumeric
@@ -530,7 +530,7 @@ Strike = &{ extension(EXT_STRIKE) }
          { $$ = mk_list(STRIKE, a); }
 
 Hashtag = &{ extension(EXT_HASHTAGS) }
-          Spnl < '#' (!SpecialChar !',' !'.' !'$' !'@' Nonspacechar)+ >
+          < '#' (!SpecialChar !',' !'.' !'$' !'@' !':' !';' Nonspacechar)+ >
           { $$ = mk_str(yytext); $$->key = HASHTAG; }
 
 Image = '!' ( ExplicitLink | ReferenceLink )
