@@ -21,6 +21,7 @@ enum markdown_extensions {
     EXT_MEDIA            = 0x0100,
     EXT_CODEBLOCK        = 0x0200,
     EXT_HASHTAGS         = 0x0400,
+    EXT_USERNAMES        = 0x0800,
 };
 
 enum markdown_formats {

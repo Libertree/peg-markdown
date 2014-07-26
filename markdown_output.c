@@ -177,6 +177,9 @@ static void print_html_element(GString *out, element *elt, bool obfuscate) {
     case HASHTAG:
         g_string_append_printf(out, "<span rel='hashtag'>%s</span>", elt->contents.str);
         break;
+    case USERNAME:
+        g_string_append_printf(out, "<span rel='username'>%s</span>", elt->contents.str);
+        break;
     case LINK:
         if (strstr(elt->contents.link->url, "mailto:") == elt->contents.link->url)
             obfuscate = true;  /* obfuscate mailto: links */
@@ -548,6 +551,9 @@ static void print_latex_element(GString *out, element *elt) {
     case HASHTAG:
         print_latex_string(out, elt->contents.str);
         break;
+    case USERNAME:
+        print_latex_string(out, elt->contents.str);
+        break;
     case VERBATIM:
         pad(out, 1);
         g_string_append_printf(out, "\\begin{verbatim}\n");
@@ -696,6 +702,9 @@ static void print_groff_mm_element(GString *out, element *elt, int count) {
         /* don't print HTML */
         break;
     case HASHTAG:
+        print_groff_string(out, elt->contents.str);
+        break;
+    case USERNAME:
         print_groff_string(out, elt->contents.str);
         break;
     case LINK:
@@ -1008,6 +1017,9 @@ static void print_odf_element(GString *out, element *elt) {
     case HTML:
         break;
     case HASHTAG:
+        print_html_string(out, elt->contents.str, 0);
+        break;
+    case USERNAME:
         print_html_string(out, elt->contents.str, 0);
         break;
     case LINK:

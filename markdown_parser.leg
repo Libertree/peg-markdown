@@ -431,6 +431,7 @@ Inline  = Endline
         | UlOrStarLine
         | Space
         | Hashtag
+        | Username
         | Strong
         | Emph
         | Strike
@@ -454,7 +455,7 @@ Str = a:StartList < NormalChar+ > { a = cons(mk_str(yytext), a); }
       ( StrChunk { a = cons($$, a); } )*
       { if (a->next == NULL) { $$ = a; } else { $$ = mk_list(LIST, a); } }
 
-StrChunk = < (NormalChar | '_'+ &Alphanumeric | '#'+ &Alphanumeric )+ > { $$ = mk_str(yytext); } |
+StrChunk = < (NormalChar | '_'+ &Alphanumeric | '#'+ &Alphanumeric | '@'+ &Alphanumeric)+ > { $$ = mk_str(yytext); } |
            AposChunk
 
 AposChunk = &{ extension(EXT_SMART) } '\'' &Alphanumeric
@@ -532,6 +533,10 @@ Strike = &{ extension(EXT_STRIKE) }
 Hashtag = &{ extension(EXT_HASHTAGS) }
           < '#' (!SpecialChar !',' !'.' !'$' !'@' !':' !';' Nonspacechar)+ >
           { $$ = mk_str(yytext); $$->key = HASHTAG; }
+
+Username = &{ extension(EXT_USERNAMES) }
+           < '@' (AlphanumericAscii | '_')+ >
+           { $$ = mk_str(yytext); $$->key = USERNAME; }
 
 Image = '!' ( ExplicitLink | ReferenceLink )
         { if ($$->key == LINK) {
