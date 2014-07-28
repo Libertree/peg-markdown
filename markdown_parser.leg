@@ -530,9 +530,15 @@ Strike = &{ extension(EXT_STRIKE) }
          "~~"
          { $$ = mk_list(STRIKE, a); }
 
+HashtagRegular = < '#' (!SpecialChar !',' !'.' !'$' !'@' !':' !';' Nonspacechar)+ >
+                 { $$ = mk_str(yytext); $$->key = HASHTAG; }
+HashtagLink = '#' '[' < ( !']' . )+ > ']'
+              { $$ = mk_str(yytext);
+                $$->key = HASHTAG;
+              }
+
 Hashtag = &{ extension(EXT_HASHTAGS) }
-          < '#' (!SpecialChar !',' !'.' !'$' !'@' !':' !';' Nonspacechar)+ >
-          { $$ = mk_str(yytext); $$->key = HASHTAG; }
+          HashtagLink | HashtagRegular
 
 Username = &{ extension(EXT_USERNAMES) }
            < '@' (AlphanumericAscii | '_')+ >
