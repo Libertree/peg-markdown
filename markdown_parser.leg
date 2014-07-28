@@ -64,6 +64,7 @@ Doc =       BOM? a:StartList ( Block { a = cons($$, a); } )*
 
 Block =     BlankLine*
             ( BlockQuote
+            | SpoilerBlock
             | Verbatim
             | CodeBlock
             | Note
@@ -123,6 +124,21 @@ BlockQuoteRaw =  a:StartList
                  {   $$ = mk_str_from_list(a, true);
                      $$->key = RAW;
                  }
+
+SpoilerBlock = &{ extension(EXT_SPOILERBLOCK) }
+               a:SpoilerBlockRaw
+               {  $$ = mk_element(SPOILERBLOCK);
+                  $$->children = a;
+               }
+
+SpoilerBlockRaw =  a:StartList
+                   (( "?>" ' '? Line { a = cons($$, a); } )
+                    ( !"?>" !BlankLine Line { a = cons($$, a); } )*
+                    ( BlankLine { a = cons(mk_str("\n"), a); } )*
+                   )+
+                   {   $$ = mk_str_from_list(a, true);
+                       $$->key = RAW;
+                   }
 
 NonblankIndentedLine = !BlankLine IndentedLine
 

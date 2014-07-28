@@ -91,6 +91,7 @@ static void print_tree(element * elt, int indent) {
             case H5:                 key = "H5"; break;
             case H6:                 key = "H6"; break;
             case BLOCKQUOTE:         key = "BLOCKQUOTE"; break;
+            case SPOILERBLOCK:       key = "SPOILERBLOCK"; break;
             case VERBATIM:           key = "VERBATIM"; break;
             case HTMLBLOCK:          key = "HTMLBLOCK"; break;
             case HRULE:              key = "HRULE"; break;

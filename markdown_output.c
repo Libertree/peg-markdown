@@ -336,6 +336,15 @@ static void print_html_element(GString *out, element *elt, bool obfuscate) {
         g_string_append_printf(out, "</blockquote>");
         padded = 0;
         break;
+    case SPOILERBLOCK:
+        pad(out, 2);
+        g_string_append_printf(out, "<div class='spoilers'>\n");
+        padded = 2;
+        print_html_element_list(out, elt->children, obfuscate);
+        pad(out, 1);
+        g_string_append_printf(out, "</div>");
+        padded = 0;
+        break;
     case REFERENCE:
         /* Nonprinting */
         break;
@@ -595,6 +604,11 @@ static void print_latex_element(GString *out, element *elt) {
         g_string_append_printf(out, "\\end{quote}");
         padded = 0;
         break;
+    case SPOILERBLOCK:
+        pad(out, 1);
+        print_latex_element_list(out, elt->children);
+        padded = 0;
+        break;
     case NOTE:
         /* if contents.str == 0, then print note; else ignore, since this
          * is a note block that has been incorporated into the notes list */
@@ -829,6 +843,11 @@ static void print_groff_mm_element(GString *out, element *elt, int count) {
         print_groff_mm_element_list(out, elt->children);
         pad(out, 1);
         g_string_append_printf(out, ".DE");
+        padded = 0;
+        break;
+    case SPOILERBLOCK:
+        pad(out, 1);
+        print_groff_mm_element_list(out, elt->children);
         padded = 0;
         break;
     case NOTE:
@@ -1171,6 +1190,12 @@ static void print_odf_element(GString *out, element *elt) {
     case BLOCKQUOTE:
         old_type = odf_type;
         odf_type = BLOCKQUOTE;
+        print_odf_element_list(out, elt->children);
+        odf_type = old_type;
+        break;
+    case SPOILERBLOCK:
+        old_type = odf_type;
+        odf_type = SPOILERBLOCK;
         print_odf_element_list(out, elt->children);
         odf_type = old_type;
         break;

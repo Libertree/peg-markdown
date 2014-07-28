@@ -79,6 +79,7 @@ int main(int argc, char * argv[]) {
     static gboolean opt_codeblock = FALSE;
     static gboolean opt_hashtags = FALSE;
     static gboolean opt_usernames = FALSE;
+    static gboolean opt_spoilerblock = FALSE;
     static gboolean opt_allext = FALSE;
 
     static GOptionEntry entries[] =
@@ -105,6 +106,7 @@ int main(int argc, char * argv[]) {
       { "codeblock", 0, 0, G_OPTION_ARG_NONE, &opt_codeblock, "enable code block syntax", NULL },
       { "hashtags",  0, 0, G_OPTION_ARG_NONE, &opt_hashtags,  "mark hashtags", NULL },
       { "usernames", 0, 0, G_OPTION_ARG_NONE, &opt_usernames, "mark usernames", NULL },
+      { "spoilerblock", 0, 0, G_OPTION_ARG_NONE, &opt_spoilerblock, "mark blocks indented with ?> as spoilers", NULL },
       { NULL }
     };
 
@@ -159,6 +161,8 @@ int main(int argc, char * argv[]) {
         extensions = extensions | EXT_HASHTAGS;
     if (opt_usernames)
         extensions = extensions | EXT_USERNAMES;
+    if (opt_spoilerblock)
+        extensions = extensions | EXT_SPOILERBLOCK;
 
     if (opt_to == NULL)
         output_format = HTML_FORMAT;
