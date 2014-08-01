@@ -548,7 +548,7 @@ Strike = &{ extension(EXT_STRIKE) }
 
 HashtagRegular = < '#' (!SpecialChar !',' !'.' !'$' !'@' !':' !';' Nonspacechar | '_' | '-' )+ >
                  { $$ = mk_str(yytext); $$->key = HASHTAG; }
-HashtagLink = '#' '[' < ( !']' . )+ > ']'
+HashtagLink = '#' '[' < ( !']' . )+ > ']' '(' ( !')' . )+ ')'
               { char *tag = malloc(strlen(yytext) + 1);
                 sprintf(tag, "#%s", yytext);
                 $$ = mk_str(tag);
