@@ -560,7 +560,7 @@ Hashtag = &{ extension(EXT_HASHTAGS) }
           HashtagLink | HashtagRegular
 
 Username = &{ extension(EXT_USERNAMES) }
-           < '@' (AlphanumericAscii | '_' | '@' | '-' | '.' )+ >
+           < '@' (('.' | '_' | '-' | '@' | AlphanumericAscii?) AlphanumericAscii+)+ >
            { $$ = mk_str(yytext); $$->key = USERNAME; }
 
 Image = '!' ( ExplicitLink | ReferenceLink )
