@@ -654,7 +654,9 @@ TitleDouble = '"' < ( !( '"' Sp ( ')' | Newline ) ) . )* > '"'
 
 AutoLink = AutoLinkUrl | AutoLinkEmail
 
-AutoLinkContents = ( ( !'(' !')' !']' !'>' Nonspacechar )+ | '(' AutoLinkContents ')')*
+UrlChar = ( !'(' !')' !']' !'>' !',' !'.' !Spacechar !Newline .)
+NoTrailingChar = UrlChar+ [,.]+ UrlChar | UrlChar
+AutoLinkContents = (NoTrailingChar+ | '(' AutoLinkContents ')')*
 
 AutoLinkUrl =   ( '<' < [A-Za-z]+ "://" ( !Newline !'>' . )+ > '>'
                 | &{ extension(EXT_AUTOLINK) } !'[' < [A-Za-z]+ "://" AutoLinkContents > !']' )
