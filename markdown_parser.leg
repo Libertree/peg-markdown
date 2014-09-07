@@ -445,6 +445,7 @@ Inlines  =  a:StartList ( !Endline Inline { a = cons($$, a); }
 
 Inline  = Endline
         | UlOrStarLine
+        | Smart
         | Space
         | Hashtag
         | Username
@@ -460,7 +461,6 @@ Inline  = Endline
         | RawHtml
         | Entity
         | EscapedChar
-        | Smart
         | Symbol
 
 Space = Spacechar+
@@ -771,7 +771,7 @@ ExtendedSpecialChar = &{ extension(EXT_SMART) } ('.' | '-' | '\'' | '"')
                     | &{ extension(EXT_NOTES) } ( '^' )
 
 Smart = &{ extension(EXT_SMART) }
-        ( Ellipsis | Dash | SingleQuoted | DoubleQuoted | Apostrophe )
+        ( Ellipsis | Dash | SingleQuoted | DoubleQuoted | Apostrophe | EmSpace )
 
 Apostrophe = '\''
              { $$ = mk_element(APOSTROPHE); }
@@ -786,6 +786,9 @@ EnDash = '-' &Digit
 
 EmDash = ("---" | "--")
          { $$ = mk_element(EMDASH); }
+
+EmSpace = "  "
+          { $$ = mk_element(EMSPACE); }
 
 SingleQuoteStart = '\'' !(Spacechar | Newline)
 
