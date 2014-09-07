@@ -771,7 +771,7 @@ ExtendedSpecialChar = &{ extension(EXT_SMART) } ('.' | '-' | '\'' | '"')
                     | &{ extension(EXT_NOTES) } ( '^' )
 
 Smart = &{ extension(EXT_SMART) }
-        ( Ellipsis | Dash | SingleQuoted | DoubleQuoted | Apostrophe | EmSpace )
+        ( Ellipsis | Dash | SingleQuoted | DoubleQuoted | Apostrophe | EnSpace )
 
 Apostrophe = '\''
              { $$ = mk_element(APOSTROPHE); }
@@ -787,8 +787,8 @@ EnDash = '-' &Digit
 EmDash = ("---" | "--")
          { $$ = mk_element(EMDASH); }
 
-EmSpace = "  "
-          { $$ = mk_element(EMSPACE); }
+EnSpace = "  "
+          { $$ = mk_element(ENSPACE); }
 
 SingleQuoteStart = '\'' !(Spacechar | Newline)
 

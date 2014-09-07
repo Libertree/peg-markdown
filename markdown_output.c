@@ -153,8 +153,8 @@ static void print_html_element(GString *out, element *elt, bool obfuscate) {
     case ENDASH:
         g_string_append_printf(out, "&ndash;");
         break;
-    case EMSPACE:
-        g_string_append_printf(out, "&emsp;");
+    case ENSPACE:
+        g_string_append_printf(out, "&ensp;");
         break;
     case APOSTROPHE:
         g_string_append_printf(out, "&rsquo;");
@@ -462,7 +462,7 @@ static void print_latex_element(GString *out, element *elt) {
     case ENDASH: 
         g_string_append_printf(out, "--");
         break;
-    case EMSPACE:
+    case ENSPACE:
         g_string_append_printf(out, "  ");
         break;
     case APOSTROPHE:
@@ -699,7 +699,7 @@ static void print_groff_mm_element(GString *out, element *elt, int count) {
     case ENDASH:
         g_string_append_printf(out, "\\[en]");
         break;
-    case EMSPACE:
+    case ENSPACE:
         g_string_append_printf(out, "  ");
         break;
     case APOSTROPHE:
@@ -1024,8 +1024,8 @@ static void print_odf_element(GString *out, element *elt) {
     case ENDASH:
         g_string_append_printf(out, "&ndash;");
         break;
-    case EMSPACE:
-        g_string_append_printf(out, "&emsp;");
+    case ENSPACE:
+        g_string_append_printf(out, "&ensp;");
         break;
     case APOSTROPHE:
         g_string_append_printf(out, "&rsquo;");
