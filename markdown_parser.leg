@@ -459,7 +459,6 @@ Inline  = Endline
         | InlineNote
         | Code
         | RawHtml
-        | Entity
         | EscapedChar
         | Symbol
 
@@ -479,9 +478,6 @@ AposChunk = &{ extension(EXT_SMART) } '\'' &Alphanumeric
 
 EscapedChar =   '\\' !Newline < [-\\`|*_{}[\]()#+.!><] >
                 { $$ = mk_str(yytext); }
-
-Entity =    ( HexEntity | DecEntity | CharEntity )
-            { $$ = mk_str(yytext); $$->key = HTML; }
 
 Endline =   LineBreak | TerminalEndline | NormalEndline
 
@@ -682,8 +678,8 @@ Label = '[' ( !'^' &{ extension(EXT_NOTES) } | &. &{ !extension(EXT_NOTES) } )
         ']'
         { $$ = mk_list(LIST, a); }
 
-RefSrc = < Nonspacechar+ > 
-         { $$ = mk_str(yytext); 
+RefSrc = < Nonspacechar+ >
+         { $$ = mk_str(yytext);
            $$->key = HTML; }
 
 RefTitle =  ( RefTitleSingle | RefTitleDouble | RefTitleParens | EmptyTitle )
@@ -742,10 +738,6 @@ Alphanumeric = [0-9A-Za-z] | '\200' | '\201' | '\202' | '\203' | '\204' | '\205'
 AlphanumericAscii = [A-Za-z0-9]
 Digit = [0-9]
 BOM = "\357\273\277"
-
-HexEntity =     < '&' '#' [Xx] [0-9a-fA-F]+ ';' >
-DecEntity =     < '&' '#' [0-9]+ > ';' >
-CharEntity =    < '&' [A-Za-z0-9]+ ';' >
 
 NonindentSpace =    "   " | "  " | " " | ""
 Indent =            "\t" | "    "
