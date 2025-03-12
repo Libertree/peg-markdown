@@ -9,10 +9,10 @@
 struct Link {
     struct Element   *label;
     char             *url;
-    char             *title;    
+    char             *title;
 };
 
-typedef struct Link link;
+typedef struct Link md_link;
 
 /* Information (label and two sources) for a media link. */
 struct Media {
@@ -30,7 +30,7 @@ union Contents {
     struct Media     *media;
 };
 
-/* Types of semantic values returned by parsers. */ 
+/* Types of semantic values returned by parsers. */
 enum keys { LIST,   /* A generic list of values.  For ordered and bullet lists, see below. */
             RAW,    /* Raw markdown to be processed further */
             SPACE,
