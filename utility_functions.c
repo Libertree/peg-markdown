@@ -116,7 +116,7 @@ element * mk_list(int key, element *lst) {
 element * mk_link(element *label, char *url, char *title) {
     element *result;
     result = mk_element(LINK);
-    result->contents.link = malloc(sizeof(link));
+    result->contents.link = malloc(sizeof(md_link));
     result->contents.link->label = label;
     result->contents.link->url = strdup(url);
     result->contents.link->title = strdup(title);
